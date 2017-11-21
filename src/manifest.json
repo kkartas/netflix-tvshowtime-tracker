@@ -1,12 +1,13 @@
 {
   "manifest_version": 2,
-
   "name": "netflix tvshowtime tracker",
   "description": "Chrome extension to track netflix watched shows to tvshowtime",
   "version": "0.0.1",
   "options_page": "options/options.html",
   "background": {
-    "scripts": ["background.js"],
+    "scripts": [
+      "background.js"
+    ],
     "persistent": true
   },
   "page_action": {
@@ -16,10 +17,18 @@
     "activeTab",
     "notifications",
     "declarativeContent",
-    "https://api.tvshowtime.com/"
+    "https://api.tvshowtime.com/",
+    "*://*.netflix.com/watch*"
   ],
-  "content_scripts": [{
-    "matches": ["*://*.netflix.com/watch*"],
-    "js": ["content/netflix_content.js"]
-  }]
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.netflix.com/watch*"
+      ],
+      "js": [
+        "tvshowtime.js",
+        "content/netflix_content.js"
+      ]
+    }
+  ]
 }
