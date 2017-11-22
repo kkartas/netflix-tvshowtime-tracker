@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  
+
   console.log('loaded netflix_content');
   var done = false;
 
@@ -44,8 +44,14 @@
 
           // if more than 50% watched we send to background the info
           if (progress > 50) {
+            
             if (!done) {
               console.log('sending message');
+              new tvshowtime().postShow(show, function(msg){
+                notify(msg);
+              }, function(err){
+                notify(err);
+              });
               chrome.runtime.sendMessage(show, function(res) {
                 // after notified stop marking and sending notifications
                 if (res.status === 'done') {
@@ -64,4 +70,28 @@
     }
   }
   window.setInterval(executeWhenLoaded, 10000);
+  
+  function notify(msg) {
+    if (!("Notification" in window)) {
+      console.warn("This browser does not support desktop notification");
+    }
+
+    // Let's check whether notification permissions have already been granted
+    else if (Notification.permission === "granted") {
+      var notification = new Notification(msg);
+    }
+
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== "denied") {
+      Notification.requestPermission(function (permission) {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          var notification = new Notification(msg);
+        }
+      });
+    }
+
+    // At last, if the user has denied notifications, and you 
+    // want to be respectful there is no need to bother them any more.
+  }
 })();
