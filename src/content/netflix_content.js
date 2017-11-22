@@ -32,7 +32,7 @@
           tempEp = tempEp.map(function(n) { return n.replace(/[^0-9]/g, ''); });
           var show = {
             name: showInfoElement.children[0].innerText,
-            temp: parseInt(tempEp[0], 10),
+            season: parseInt(tempEp[0], 10),
             ep: parseInt(tempEp[1], 10)
           };
 

@@ -13,12 +13,14 @@
     // some way to do this
     this.data = new FormData(data);
     this.xhttp.open(httpVerb, url, true);
-    if (httpVerp === 'POST') {
+    if (httpVerb === 'POST') {
       this.xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     }
 
-    this.xhttp.onload = callback;
-    this.xhttp.send();
+    this.xhttp.onload = function (res) {
+      callback(parseResponse(res))
+    };
+    this.xhttp.send(data ? serialize(data) : undefined);
   };
 
   tvshowtime.prototype.register = function() {
@@ -38,4 +40,16 @@
     });
   };
 
+  function parseResponse(progressEvent) {
+    return JSON.parse(progressEvent.currentTarget.response);
+  }
+
+  function serialize(obj) {
+    var str = [];
+    for (var p in obj)
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+    return str.join("&");
+  }
 })();
