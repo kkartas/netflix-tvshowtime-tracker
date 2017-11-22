@@ -10,12 +10,14 @@
   };
 
   tvshowtime.prototype.makeCall = function(httpVerb, url, data, callback) {
+    var client = this;
     // some way to do this
     this.data = new FormData(data);
     this.xhttp.open(httpVerb, url, true);
     if (httpVerb === 'POST') {
       this.xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     }
+    this.xhttp.setRequestHeader('Authorization', 'Basic ' + this.clientId);
 
     this.xhttp.onload = function (res) {
       callback(parseResponse(res))
