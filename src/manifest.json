@@ -4,6 +4,11 @@
   "description": "Chrome extension to track netflix watched shows to tvshowtime",
   "version": "0.0.1",
   "options_page": "options/options.html",
+  "icons": {
+    "16": "icon.ico",
+    "48": "icon.ico",
+    "128": "icon.ico"
+  },
   "background": {
     "scripts": [
       "background.js"
