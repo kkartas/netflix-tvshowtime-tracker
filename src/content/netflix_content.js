@@ -1,4 +1,4 @@
-(function(){
+(function () {
   'use strict';
 
   console.log('loaded netflix_content');
@@ -7,9 +7,11 @@
   function executeWhenLoaded() {
     console.log('checking netflix progress');
 
-    if(done)
+    if (done) {
+      console.log("already sent message")
       return;
-    
+    }
+
     try {
       var elements = {
         showInfo: {
@@ -33,7 +35,7 @@
           // TODO better way to do this
           var tempEp = showInfoElement.children[1].innerText.split(':');
           // make numbers from the strings
-          tempEp = tempEp.map(function(n) { return n.replace(/[^0-9]/g, ''); });
+          tempEp = tempEp.map(function (n) { return n.replace(/[^0-9]/g, ''); });
           var show = {
             name: showInfoElement.children[0].innerText,
             season: parseInt(tempEp[0], 10),
@@ -44,18 +46,16 @@
 
           // if more than 50% watched we send to background the info
           if (progress > 50) {
-            
+
             if (!done) {
               console.log('sending message');
-              new tvshowtime().postShow(show, function(msg){
-                notify(msg);
-              }, function(err){
-                notify(err);
-              });
-              chrome.runtime.sendMessage(show, function(res) {
+
+              chrome.runtime.sendMessage(show, function (res) {
                 // after notified stop marking and sending notifications
                 if (res.status === 'done') {
                   done = true;
+                  console.log("sendMessage callback: ", res)
+                  notify(res.message);
                 }
               });
             }
@@ -70,7 +70,7 @@
     }
   }
   window.setInterval(executeWhenLoaded, 10000);
-  
+
   function notify(msg) {
     if (!("Notification" in window)) {
       console.warn("This browser does not support desktop notification");

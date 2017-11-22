@@ -11,6 +11,7 @@
   },
   "background": {
     "scripts": [
+      "tvshowtime.js",
       "background.js"
     ],
     "persistent": true
@@ -31,7 +32,6 @@
         "*://*.netflix.com/watch*"
       ],
       "js": [
-        "tvshowtime.js",
         "content/netflix_content.js"
       ]
     }

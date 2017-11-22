@@ -1,10 +1,28 @@
-(function(){
+(function () {
   'use strict';
+
+  chrome.runtime.onMessage.addListener(function (req, sender, sendMessage) {
+    // mark in tvshowtime
+
+    console.log("tvshowtime listener called");
+    // console.log(sender);
+
+    new tvshowtime().postShow(req, function (msg) {
+      sendMessage({ status: 'done', message: msg });
+    }, function (err) {
+      sendMessage({ status: 'done', message: err });
+    });
+
+    return true; // async - see https://stackoverflow.com/questions/20077487/chrome-extension-message-passing-response-not-sent
+  });
+
+  console.log("tvshowtime listener created");
 
   var tvshowtime = function (user, pass, clientId) {
     this.user = user;
     this.pass = pass;
     this.clientId = clientId;
+    // TODO - need to load this from somewhere
     this.baseUrl = "https://api.tvshowtime.com";
     this.xhttp = new XMLHttpRequest();
   };
