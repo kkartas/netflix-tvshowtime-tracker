@@ -1,23 +1,24 @@
 (function(){
   'use strict';
-
+  console.log('loaded netflix_content');
   var done = false;
 
   function executeWhenLoaded() {
+    console.log('checking netflix progress');
     try {
       var elements = {
         showInfo: {
-          className: 'player-status'
+          className: 'PlayerControls--control-element text-control video-title PlayerControls--control-element-hidden'
         },
 
         progress: {
-          className: 'player-scrubber-progress-completed',
+          className: 'current-progress',
           styleElement: 'width'
         }
 
       };
 
-      var showInfoElement = document.getElementsByClassName(elements.showInfo.className)[0];
+      var showInfoElement = document.getElementsByClassName(elements.showInfo.className)[0].children[0];
       var progressElement = document.getElementsByClassName(elements.progress.className)[0];
 
 
