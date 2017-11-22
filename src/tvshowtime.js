@@ -20,7 +20,8 @@
     this.xhttp.setRequestHeader('Authorization', 'Basic ' + this.clientId);
 
     this.xhttp.onload = function (res) {
-      callback(parseResponse(res))
+      var response = client.xhttp.status === 200 ? parseResponse(res) : null;
+      callback(response);
     };
     this.xhttp.send(data ? serialize(data) : undefined);
   };

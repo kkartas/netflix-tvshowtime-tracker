@@ -1,10 +1,15 @@
 (function(){
   'use strict';
+  
   console.log('loaded netflix_content');
   var done = false;
 
   function executeWhenLoaded() {
     console.log('checking netflix progress');
+
+    if(done)
+      return;
+    
     try {
       var elements = {
         showInfo: {
@@ -20,7 +25,6 @@
 
       var showInfoElement = document.getElementsByClassName(elements.showInfo.className)[0].children[0];
       var progressElement = document.getElementsByClassName(elements.progress.className)[0];
-
 
       // if the player is loaded
       if (showInfoElement && progressElement) {
